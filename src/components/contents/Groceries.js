@@ -1,5 +1,9 @@
+import { inject, observer } from 'mobx-react';
+
 function Groceries(props) {
-  console.log(props);
+  const { groceriesStore } = props;
+  const { grocery } = groceriesStore;
+  console.log(grocery);
   return (
     <article>
       <form className="form-inputs">
@@ -79,4 +83,4 @@ function Groceries(props) {
   )
 }
 
-export default Groceries;
+export default inject('groceriesStore')(observer(Groceries));
