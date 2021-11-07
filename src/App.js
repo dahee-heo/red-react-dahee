@@ -8,21 +8,19 @@ import Items from './components/contents/Items.js';
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header></Header>
       <div className="contents">
-        <BrowserRouter>
           <Switch>
             <Route exact={true} path="/home" component={Home} />
             <Route exact={true} path="/groceries" component={props => <Groceries {...props} testProps={true} />} />
             <Route exact={true} path="/items" component={props => <Items {...props} testProps={true} />} />
             <Redirect to={{pathname: "/home"}} />
           </Switch>
-        </BrowserRouter>
 
       </div>
       <Footer></Footer>
-    </>
+    </BrowserRouter>
   );
 }
 
