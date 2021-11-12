@@ -1,8 +1,8 @@
 import { configure, makeAutoObservable } from 'mobx';
 
 configure({
-  // enforceActions: 'never',
-  // useProxies: 'never'
+  enforceActions: 'never',
+  useProxies: 'never'
 });
 
 export default class GroceriesStore {

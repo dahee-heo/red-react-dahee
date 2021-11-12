@@ -6,8 +6,14 @@ function Groceries(props) {
   console.log(grocery);
   return (
     <article>
-      <form className="form-inputs">
-        <input type="text" name="name" />
+      <form className="form-inputs" onSubmit={event => {
+        event.preventDefault();
+        groceriesStore.groceriesCreate()
+      }}>
+        <input
+          type="text" name="name" value={grocery.name}
+          onChange={event => {grocery.name = event.target.value}}
+        />
         <button className="button-create"><span className="material-icons">edit</span></button>
       </form>
       <div className="div-table">
