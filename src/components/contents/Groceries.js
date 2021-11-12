@@ -57,7 +57,9 @@ function Groceries(props) {
               <td>{grocery.enter}</td>
               <td className="td-expire"><input type="date" defaultValue={grocery.expire} /></td>
               <td className="td-delete">
-                <button className="button-delete"><span className="material-icons">delete</span></button>
+                <button className="button-delete"
+                  onClick={() => groceriesStore.groceriesDelete(index)}
+                ><span className="material-icons">delete</span></button>
               </td>
             </tr>
           ))}

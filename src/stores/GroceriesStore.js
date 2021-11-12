@@ -39,6 +39,11 @@ export default class GroceriesStore {
     }];
     console.log('Dome groceriesRead', this.groceries);
   }
+
+  groceriesDelete(index) {
+    this.groceries.splice(index, 1);
+    console.log('Done groceriesDelete', this.groceries);
+  }
 }
 
 export const groceriesStore = new GroceriesStore();
