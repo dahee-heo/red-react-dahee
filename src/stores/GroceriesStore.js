@@ -35,16 +35,17 @@ export default class GroceriesStore {
   }
 
   groceriesRead() {
-    this.groceries = [{
-      name: '사과',
-      enter: '2021-11-12',
-      expire: '2021-11-19'
-    }, {
-      name: '바나나',
-      enter: '2021-11-12',
-      expire: '2021-11-19'
-    }];
-    console.log('Dome groceriesRead', this.groceries);
+    axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
+      console.log('Done groceriesRead', response);
+      debugger;
+      const groceries = [];
+      for (const key in response.data) {
+        groceries.push(response.data[key])
+      }
+      this.groceries = groceries;
+    }).catch((error) => {
+      axiosError(error);
+    });
   }
 
   groceriesDelete(index) {

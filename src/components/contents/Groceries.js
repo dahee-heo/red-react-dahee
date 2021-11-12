@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 function Groceries(props) {
   const { groceriesStore } = props;
   const { grocery, groceries } = groceriesStore;
-  console.log(grocery);
+  console.log(grocery, groceries);
   useEffect(() => {
     groceriesStore.groceriesRead();
   }, [groceriesStore]);
