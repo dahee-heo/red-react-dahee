@@ -1,5 +1,7 @@
 import { configure, makeAutoObservable } from 'mobx';
 import moment from 'moment';
+import axios from 'axios';
+import { axiosError } from './common.js';
 
 configure({
   enforceActions: 'never',
@@ -19,12 +21,17 @@ export default class GroceriesStore {
   };
 
   groceriesCreate() {
-    this.groceries.push({
+    const grocery = {
       name: this.grocery.name,
       enter: moment().format('YYYY-MM-DD'),
       expire: moment().add(7, 'days').format('YYYY-MM-DD')
+    };
+    axios.post('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json', grocery).then((response) => {
+      console.log('Done groceriesCreate', response);
+      this.groceriesRead();
+    }).catch((error) => {
+      axiosError(error);
     });
-    console.log('Done groceriesCreate', this.groceries);
   }
 
   groceriesRead() {
