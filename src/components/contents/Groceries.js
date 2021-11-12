@@ -47,39 +47,39 @@ function Groceries(props) {
           </thead>
           <tbody>
             <tr>
-              <td><input type="checkbox" onchange="" /></td>
+              <td><input type="checkbox" /></td>
               <td>사과</td>
               <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" value="2021-02-02" onchange="" /></td>
+              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
               <td className="td-delete">
-                <button className="button-delete" onclick=""><span className="material-icons">delete</span></button>
+                <button className="button-delete"><span className="material-icons">delete</span></button>
               </td>
             </tr>
             <tr>
-              <td><input type="checkbox" onchange="" /></td>
+              <td><input type="checkbox" /></td>
               <td>바나나</td>
               <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" value="2021-02-02" onchange="" /></td>
+              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
               <td className="td-delete">
-                <button className="button-delete" onclick=""><span className="material-icons">delete</span></button>
+                <button className="button-delete"><span className="material-icons">delete</span></button>
               </td>
             </tr>
             <tr>
-              <td><input type="checkbox" onchange="" /></td>
+              <td><input type="checkbox" /></td>
               <td>딸기</td>
               <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" value="2021-02-02" onchange="" /></td>
+              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
               <td className="td-delete">
-                <button className="button-delete" onclick=""><span className="material-icons">delete</span></button>
+                <button className="button-delete"><span className="material-icons">delete</span></button>
               </td>
             </tr>
             <tr>
-              <td><input type="checkbox" onchange="" /></td>
+              <td><input type="checkbox" /></td>
               <td>키위</td>
               <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" value="2021-02-02" onchange="" /></td>
+              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
               <td className="td-delete">
-                <button className="button-delete" onclick=""><span className="material-icons">delete</span></button>
+                <button className="button-delete"><span className="material-icons">delete</span></button>
               </td>
             </tr>
           </tbody>

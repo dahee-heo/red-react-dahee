@@ -1,4 +1,5 @@
 import { configure, makeAutoObservable } from 'mobx';
+import moment from 'moment';
 
 configure({
   enforceActions: 'never',
@@ -20,8 +21,8 @@ export default class GroceriesStore {
   groceriesCreate() {
     this.groceries.push({
       name: this.grocery.name,
-      enter: this.grocery.enter,
-      expire: this.grocery.expire
+      enter: moment().format('YYYY-MM-DD'),
+      expire: moment().add(7, 'days').format('YYYY-MM-DD')
     });
     console.log('Done groceriesCreate', this.groceries);
   }
