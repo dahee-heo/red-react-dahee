@@ -26,6 +26,19 @@ export default class GroceriesStore {
     });
     console.log('Done groceriesCreate', this.groceries);
   }
+
+  groceriesRead() {
+    this.groceries = [{
+      name: '사과',
+      enter: '2021-11-12',
+      expire: '2021-11-19'
+    }, {
+      name: '바나나',
+      enter: '2021-11-12',
+      expire: '2021-11-19'
+    }];
+    console.log('Dome groceriesRead', this.groceries);
+  }
 }
 
 export const groceriesStore = new GroceriesStore();

@@ -1,9 +1,13 @@
 import { inject, observer } from 'mobx-react';
+import { useEffect } from 'react';
 
 function Groceries(props) {
   const { groceriesStore } = props;
-  const { grocery } = groceriesStore;
+  const { grocery, groceries } = groceriesStore;
   console.log(grocery);
+  useEffect(() => {
+    groceriesStore.groceriesRead();
+  }, [groceriesStore]);
   return (
     <article>
       <form className="form-inputs" onSubmit={event => {
@@ -46,42 +50,17 @@ function Groceries(props) {
             </tr>
           </thead>
           <tbody>
-            <tr>
+          {groceries.map((grocery, index) => (
+            <tr key={index}>
               <td><input type="checkbox" /></td>
-              <td>사과</td>
-              <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
+              <td>{grocery.name}</td>
+              <td>{grocery.enter}</td>
+              <td className="td-expire"><input type="date" defaultValue={grocery.expire} /></td>
               <td className="td-delete">
                 <button className="button-delete"><span className="material-icons">delete</span></button>
               </td>
             </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>바나나</td>
-              <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
-              <td className="td-delete">
-                <button className="button-delete"><span className="material-icons">delete</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>딸기</td>
-              <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
-              <td className="td-delete">
-                <button className="button-delete"><span className="material-icons">delete</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>키위</td>
-              <td>2021-01-01</td>
-              <td className="td-expire"><input type="date" defaultValue="2021-02-02" /></td>
-              <td className="td-delete">
-                <button className="button-delete"><span className="material-icons">delete</span></button>
-              </td>
-            </tr>
+          ))}
           </tbody>
         </table>
       </div>
