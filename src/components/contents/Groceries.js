@@ -55,7 +55,14 @@ function Groceries(props) {
               <td><input type="checkbox" /></td>
               <td>{grocery.name}</td>
               <td>{grocery.enter}</td>
-              <td className="td-expire"><input type="date" defaultValue={grocery.expire} /></td>
+              <td className="td-expire">
+                <input type="date" defaultValue={grocery.expire}
+                  onChange={event => {
+                    grocery.expire = event.target.value;
+                    groceriesStore.groceriesUpdate(index, grocery);
+                  }}
+                />
+              </td>
               <td className="td-delete">
                 <button className="button-delete"
                   onClick={() => groceriesStore.groceriesDelete(index)}

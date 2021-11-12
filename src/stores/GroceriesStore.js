@@ -44,6 +44,11 @@ export default class GroceriesStore {
     this.groceries.splice(index, 1);
     console.log('Done groceriesDelete', this.groceries);
   }
+
+  groceriesUpdate(index, grocery) {
+    this.groceries[index] = grocery;
+    console.log('Done groceriesUpdate', this.groceries);
+  }
 }
 
 export const groceriesStore = new GroceriesStore();
