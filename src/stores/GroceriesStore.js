@@ -37,20 +37,28 @@ export default class GroceriesStore {
   groceriesRead() {
     axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
       console.log('Done groceriesRead', response);
-      debugger;
       const groceries = [];
       for (const key in response.data) {
-        groceries.push(response.data[key])
+        const grocery = response.data[key];
+        grocery.key = key;
+        groceries.push(grocery);
       }
+      console.log(groceries)
       this.groceries = groceries;
     }).catch((error) => {
       axiosError(error);
     });
   }
 
-  groceriesDelete(index) {
-    this.groceries.splice(index, 1);
-    console.log('Done groceriesDelete', this.groceries);
+  groceriesDelete(key) {
+    console.log(key)
+    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries/'+key+'.json'
+    axios.delete(url).then((response) => {
+      console.log('Done groceriesDelete', response);
+      this.groceriesRead();
+    }).catch((error) => {
+      axiosError(error);
+    });
   }
 
   groceriesUpdate(index, grocery) {

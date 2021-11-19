@@ -65,7 +65,7 @@ function Groceries(props) {
               </td>
               <td className="td-delete">
                 <button className="button-delete"
-                  onClick={() => groceriesStore.groceriesDelete(index)}
+                  onClick={() => groceriesStore.groceriesDelete(grocery.key)}
                 ><span className="material-icons">delete</span></button>
               </td>
             </tr>
