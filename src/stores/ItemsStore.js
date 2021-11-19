@@ -49,9 +49,13 @@ export default class ItemsStore {
     });
   }
 
-  itemsDelete(grocery) {
-    console.log(grocery)
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+grocery.key+'.json'
+  itemsDelete(object) {
+    console.log(object)
+    const confirm = window.confirm(object.name + '을 지우시겠습니까?')
+    if (!confirm) {
+      return
+    }
+    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+object.key+'.json'
     axios.delete(url).then((response) => {
       console.log('Done itemsDelete', response);
       this.itemsRead();

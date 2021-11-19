@@ -55,7 +55,9 @@ function Items(props) {
                 {/* <button className="button-update" onClick="modalToggle();"><span className="material-icons">edit_note</span></button> */}
               </td>
               <td className="td-delete">
-                {/* <button className="button-delete" onClick=""><span className="material-icons">delete</span></button> */}
+                <button className="button-delete" 
+                  onClick={() => itemsStore.itemsDelete(item)}
+                ><span className="material-icons">delete</span></button>
               </td>
             </tr>
           ))}
