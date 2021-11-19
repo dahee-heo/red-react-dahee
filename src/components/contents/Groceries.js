@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 function Groceries(props) {
   const { groceriesStore } = props;
+  const { itemsStore } = props;
   const { grocery, groceries } = groceriesStore;
   console.log(grocery, groceries);
   useEffect(() => {
@@ -52,7 +53,15 @@ function Groceries(props) {
           <tbody>
           {groceries.map((grocery, index) => (
             <tr key={index}>
-              <td><input type="checkbox" /></td>
+              <td><input type="checkbox" 
+                onChange={event => {
+                  if (event.target.checked) {
+                    itemsStore.itemsUpdate(grocery)
+                  } else {
+                    itemsStore.itemsDelete(grocery)
+                  }
+                }}
+              /></td>
               <td>{grocery.name}</td>
               <td>{grocery.enter}</td>
               <td className="td-expire">
@@ -77,4 +86,4 @@ function Groceries(props) {
   )
 }
 
-export default inject('groceriesStore')(observer(Groceries));
+export default inject('groceriesStore', 'itemsStore')(observer(Groceries));

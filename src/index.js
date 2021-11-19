@@ -5,12 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'mobx-react';
 import { groceriesStore } from './stores/GroceriesStore.js';
+import { itemsStore } from './stores/ItemsStore.js';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider
       groceriesStore={groceriesStore}
+      itemsStore={itemsStore}
     >
       <App />
     </Provider>
