@@ -61,9 +61,17 @@ export default class GroceriesStore {
     });
   }
 
-  groceriesUpdate(index, grocery) {
-    this.groceries[index] = grocery;
-    console.log('Done groceriesUpdate', this.groceries);
+  groceriesUpdate(grocery) {
+    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries/'+grocery.key+'.json'
+    const groceryUpdate = {
+      expire: grocery.expire
+    }
+    axios.patch(url, groceryUpdate).then((response) => {
+      console.log('Done groceriesDelete', response);
+      this.groceriesRead();
+    }).catch((error) => {
+      axiosError(error);
+    });
   }
 }
 

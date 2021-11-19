@@ -59,7 +59,7 @@ function Groceries(props) {
                 <input type="date" defaultValue={grocery.expire}
                   onChange={event => {
                     grocery.expire = event.target.value;
-                    groceriesStore.groceriesUpdate(index, grocery);
+                    groceriesStore.groceriesUpdate(grocery);
                   }}
                 />
               </td>
