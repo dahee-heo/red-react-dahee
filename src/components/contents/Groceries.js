@@ -54,6 +54,7 @@ function Groceries(props) {
           {groceries.map((grocery, index) => (
             <tr key={index}>
               <td><input type="checkbox" 
+                checked={grocery.hasItem}
                 onChange={event => {
                   if (event.target.checked) {
                     itemsStore.itemsUpdate(grocery)

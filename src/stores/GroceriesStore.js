@@ -35,19 +35,39 @@ export default class GroceriesStore {
   }
 
   groceriesRead() {
-    axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
-      console.log('Done groceriesRead', response);
+    const promises = [];
+    promises[0] = new Promise(function(resolve, reject) {
+      axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
+        console.log('Done groceriesRead', response);
+        resolve(response.data);
+      }).catch((error) => {
+        reject(error);
+      });
+    })
+    promises[1] = new Promise(function(resolve, reject) {
+      axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items.json').then((response) => {
+        resolve(response.data);
+      }).catch(function(error) {
+        reject(error);
+      })
+    })
+    Promise.all(promises).then((result) => {
+      console.log(result);
+      const promiseGroceries = result[0];
+      const promiseItems = result[1];
       const groceries = [];
-      for (const key in response.data) {
-        const grocery = response.data[key];
+      for (const key in promiseGroceries) {
+        const grocery = promiseGroceries[key];
         grocery.key = key;
+        grocery.hasItem = promiseItems[key];
         groceries.push(grocery);
       }
       console.log(groceries)
       this.groceries = groceries;
-    }).catch((error) => {
+    }).catch(function(error) {
       axiosError(error);
-    });
+    })
+
   }
 
   groceriesDelete(key) {
