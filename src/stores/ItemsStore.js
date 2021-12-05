@@ -17,7 +17,8 @@ export default class ItemsStore {
   item = {
     name: '',
     enter: '',
-    expire: ''
+    expire: '',
+    key: ''
   };
 
   // itemsCreate(grocery) {
@@ -64,15 +65,16 @@ export default class ItemsStore {
     });
   }
 
-  itemsUpdate(grocery) {
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+grocery.key+'.json'
+  itemsUpdate(item, cb) {
+    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+item.key+'.json'
     const itemUpdate = {
-      name: grocery.name,
-      enter: grocery.enter,
-      expire: grocery.expire
+      name: item.name,
+      enter: item.enter,
+      expire: item.expire
     }
     axios.patch(url, itemUpdate).then((response) => {
-      console.log('Done itemsDelete', response);
+      console.log('Done itemsUpdate', response);
+      if (cb) cb();
     }).catch((error) => {
       axiosError(error);
     });

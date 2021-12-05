@@ -14,7 +14,15 @@ function Items(props) {
     item.name = _item.name;
     item.enter = _item.enter;
     item.expire = _item.expire;
-  }
+    item.key = _item.key;
+  };
+  const itemsUpdate = function() {
+    const cb = function() {
+      modalToggle();
+      itemsStore.itemsRead();
+    };
+    itemsStore.itemsUpdate(item, cb);
+  };
   console.log(props);
   return (
     <>
@@ -116,7 +124,7 @@ function Items(props) {
           </table>
           <div className="modal-footer">
             <button className="button-close" onClick={() => modalToggle()}><span className="material-icons">close</span></button>
-            <button className="button-update"><span className="material-icons">edit_note</span></button>
+            <button className="button-update" onClick={() => itemsUpdate()}><span className="material-icons">edit_note</span></button>
           </div>
         </form>
       </div>
