@@ -34,12 +34,15 @@ export default class ItemsStore {
   //   });
   // }
 
-  itemsRead() {
+  itemsRead(q) {
     axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items.json').then((response) => {
       console.log('Done itemsRead', response);
       const items = [];
       for (const key in response.data) {
         const item = response.data[key];
+        if (item.name.indexOf(q) === -1) {
+          continue
+        }
         item.key = key;
         items.push(item);
       }

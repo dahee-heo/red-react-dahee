@@ -1,11 +1,16 @@
 import { inject, observer } from 'mobx-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function Items(props) {
   const { itemsStore } = props;
   const { items, item } = itemsStore;
+  const [ q, setQ ] = useState('');
+  const serch = (event) => {
+    event.preventDefault();
+    itemsStore.itemsRead(q);
+  }
   useEffect(() => {
-    itemsStore.itemsRead();
+    itemsStore.itemsRead('');
   }, [itemsStore]);
   const modalToggle = function(_item) {
     document.body.classList.toggle('o-hidden');
@@ -23,12 +28,15 @@ function Items(props) {
     };
     itemsStore.itemsUpdate(item, cb);
   };
-  console.log(props);
   return (
     <>
       <article>
-        <form className="form-inputs">
-          <input type="text" name="q" />
+        <form className="form-inputs" onSubmit={(event) => {serch(event)}}>
+          <input 
+            type="text"
+            value={q}
+            onChange={event => {setQ(event.target.value)}} 
+          />
           <button className="button-search"><span className="material-icons">search</span></button>
         </form>
         <div className="div-table">
