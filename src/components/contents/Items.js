@@ -2,16 +2,22 @@ import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 
 function Items(props) {
-  const { itemsStore } = props;
+  console.log(props)
+  const searchParams = new URLSearchParams(props.location.search);
+  const spSearch = searchParams.get('q') || '';
+  console.log(spSearch);
+  const { itemsStore, history } = props;
   const { items, item } = itemsStore;
   const [ q, setQ ] = useState('');
   const serch = (event) => {
     event.preventDefault();
-    itemsStore.itemsRead(q);
+    // itemsStore.itemsRead(q);
+    history.push(`?q=${q}`);
   }
   useEffect(() => {
-    itemsStore.itemsRead('');
-  }, [itemsStore]);
+    itemsStore.itemsRead(spSearch);
+    setQ(spSearch);
+  }, [itemsStore, spSearch]);
   const modalToggle = function(_item) {
     document.body.classList.toggle('o-hidden');
     document.getElementsByClassName('modal-background')[0].classList.toggle('active');
