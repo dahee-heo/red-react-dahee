@@ -1,10 +1,13 @@
 import { inject, observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Items(props) {
   console.log(props)
   const searchParams = new URLSearchParams(props.location.search);
   const spSearch = searchParams.get('q') || '';
+  const orderByName = searchParams.get('orderByName') || 'name';
+  const orderByType = searchParams.get('orderByType') || 'asc';
   console.log(spSearch);
   const { itemsStore, history } = props;
   const { items, item } = itemsStore;
@@ -15,9 +18,9 @@ function Items(props) {
     history.push(`?q=${q}`);
   }
   useEffect(() => {
-    itemsStore.itemsRead(spSearch);
+    itemsStore.itemsRead(spSearch, orderByName, orderByType);
     setQ(spSearch);
-  }, [itemsStore, spSearch]);
+  }, [itemsStore, spSearch, orderByName, orderByType]);
   const modalToggle = function(_item) {
     document.body.classList.toggle('o-hidden');
     document.getElementsByClassName('modal-background')[0].classList.toggle('active');
@@ -33,6 +36,13 @@ function Items(props) {
       itemsStore.itemsRead();
     };
     itemsStore.itemsUpdate(item, cb);
+  };
+  const activeClass = function(_orderByName, _orderByType) {
+    if (orderByName === _orderByName && orderByType === _orderByType) {
+      return ' active';
+    } else {
+      return '';
+    }
   };
   return (
     <>
@@ -53,22 +63,22 @@ function Items(props) {
                 <th>
                   <span className="title-names">
                     Name
-                    <span className="material-icons active">arrow_drop_up</span>
-                    <span className="material-icons">arrow_drop_down</span>
+                    <span className={'material-icons' + activeClass('name', 'asc')}><NavLink to="?orderByName=name&orderByType=asc">arrow_drop_up</NavLink></span>
+                    <span className={'material-icons' + activeClass('name', 'desc')}><NavLink to="?orderByName=name&orderByType=desc">arrow_drop_down</NavLink></span>
                   </span>
                 </th>
                 <th>
                   <span className="title-names">
                     Enter
-                    <span className="material-icons">arrow_drop_up</span>
-                    <span className="material-icons">arrow_drop_down</span>
+                    <span className={'material-icons' + activeClass('enter', 'asc')}><NavLink to="?orderByName=enter&orderByType=asc">arrow_drop_up</NavLink></span>
+                    <span className={'material-icons' + activeClass('enter', 'desc')}><NavLink to="?orderByName=enter&orderByType=desc">arrow_drop_down</NavLink></span>
                   </span>
                 </th>
                 <th>
                   <span className="title-names">
                     Expire
-                    <span className="material-icons">arrow_drop_up</span>
-                    <span className="material-icons">arrow_drop_down</span>
+                    <span className={'material-icons' + activeClass('expire', 'asc')}><NavLink to="?orderByName=expire&orderByType=asc">arrow_drop_up</NavLink></span>
+                    <span className={'material-icons' + activeClass('expire', 'desc')}><NavLink to="?orderByName=expire&orderByType=desc">arrow_drop_down</NavLink></span>
                   </span>
                 </th>
                 <th>Edit</th>

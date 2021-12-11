@@ -1,4 +1,5 @@
 import { configure, makeAutoObservable } from 'mobx';
+import _ from 'lodash';
 // import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
@@ -34,7 +35,7 @@ export default class ItemsStore {
   //   });
   // }
 
-  itemsRead(q) {
+  itemsRead(q, orderByName, orderByType) {
     axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items.json').then((response) => {
       console.log('Done itemsRead', response);
       const items = [];
@@ -47,7 +48,7 @@ export default class ItemsStore {
         items.push(item);
       }
       console.log(items)
-      this.items = items;
+      this.items = _.orderBy(items, orderByName, orderByType);
     }).catch((error) => {
       axiosError(error);
     });
