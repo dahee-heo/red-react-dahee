@@ -1,7 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import firebase from '@firebase/app-compat';
 
 function Header() {
+  firebase.auth().onAuthStateChanged(function(firebaseUser) {
+    console.log(firebaseUser);
+    // if (firebaseUser) {
+    //   document.getElementById('login-display').innerHTML = firebaseUser.email + ' 반가워요!';
+    // } else {
+    //   document.getElementById('login-display').innerHTML = '';
+    // }
+  });
   const [ a, setA ] = useState(false);
   return (
     <header>
