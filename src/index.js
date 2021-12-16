@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'mobx-react';
 import { groceriesStore } from './stores/GroceriesStore.js';
 import { itemsStore } from './stores/ItemsStore.js';
+import { loginStore } from './stores/LoginStore.js';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
@@ -24,6 +25,7 @@ ReactDOM.render(
     <Provider
       groceriesStore={groceriesStore}
       itemsStore={itemsStore}
+      loginStore={loginStore}
     >
       <App />
     </Provider>

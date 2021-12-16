@@ -1,17 +1,13 @@
+import { inject, observer } from 'mobx-react';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import firebase from '@firebase/app-compat';
+import { useEffect, useState } from 'react';
 
-function Header() {
-  firebase.auth().onAuthStateChanged(function(firebaseUser) {
-    console.log(firebaseUser);
-    // if (firebaseUser) {
-    //   document.getElementById('login-display').innerHTML = firebaseUser.email + ' 반가워요!';
-    // } else {
-    //   document.getElementById('login-display').innerHTML = '';
-    // }
-  });
+function Header(props) {
+  const { loginStore } = props;
   const [ a, setA ] = useState(false);
+  useEffect(() => {
+    loginStore.onAuthStateChanged();
+  }, [loginStore]);
   return (
     <header>
       <div className="logo">
@@ -36,9 +32,9 @@ function Header() {
           <span className="material-icons-outlined">account_circle</span>
           <ul className={'account-menu' + (a ? ' active' : '')}>
             <li>Guest</li>
-            <li>Login</li>
+            <li onClick={() => loginStore.googleLogin()}>Login</li>
             <li>Hello 홍길동!</li>
-            <li>Logout</li>
+            <li onClick={() => loginStore.googleLogout()}>Logout</li>
           </ul>
         </a>
       </div>
@@ -46,4 +42,4 @@ function Header() {
   )
 }
 
-export default Header;
+export default inject('loginStore')(observer(Header));
