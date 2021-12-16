@@ -22,7 +22,11 @@ export default class LoginStore {
           uid: firebaseUser.uid
         };
       } else {
-        document.getElementById('login-display').innerHTML = '';
+        this.user = {
+          displayName: '',
+          email: '',
+          uid: ''
+        };
       }
     });
   }

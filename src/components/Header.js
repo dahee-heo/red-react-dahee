@@ -31,10 +31,15 @@ function Header(props) {
         <a href="#!" id="menu-a-account" onClick={(event) => {event.preventDefault(); setA(!a)}}>
           <span className="material-icons-outlined">account_circle</span>
           <ul className={'account-menu' + (a ? ' active' : '')}>
-            <li>Guest</li>
-            <li onClick={() => loginStore.googleLogin()}>Login</li>
-            <li>Hello 홍길동!</li>
-            <li onClick={() => loginStore.googleLogout()}>Logout</li>
+            {loginStore.user.uid ? 
+            <>
+              <li>Hello {loginStore.user.displayName}!</li>
+              <li onClick={() => loginStore.googleLogout()}>Logout</li>
+            </> :
+            <>
+              <li>Guest</li>
+              <li onClick={() => loginStore.googleLogin()}>Login</li>
+            </>}
           </ul>
         </a>
       </div>
