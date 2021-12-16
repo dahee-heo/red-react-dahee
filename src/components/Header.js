@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 function Header() {
+  const [ a, setA ] = useState(false);
   return (
     <header>
       <div className="logo">
@@ -21,15 +23,15 @@ function Header() {
       </div>
       <div className="empty"></div>
       <div>
-        {/* <a href="#!" id="menu-a-account" onclick="accountToggle(); return false;">
+        <a href="#!" id="menu-a-account" onClick={(event) => {event.preventDefault(); setA(!a)}}>
           <span className="material-icons-outlined">account_circle</span>
-          <ul className="account-menu">
+          <ul className={'account-menu' + (a ? ' active' : '')}>
             <li>Guest</li>
             <li>Login</li>
             <li>Hello 홍길동!</li>
             <li>Logout</li>
           </ul>
-        </a> */}
+        </a>
       </div>
     </header>
   )
