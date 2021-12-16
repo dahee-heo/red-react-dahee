@@ -33,7 +33,7 @@ function Items(props) {
   const itemsUpdate = function() {
     const cb = function() {
       modalToggle();
-      itemsStore.itemsRead();
+      itemsStore.itemsRead(spSearch, orderByName, orderByType);
     };
     itemsStore.itemsUpdate(item, cb);
   };
@@ -119,7 +119,6 @@ function Items(props) {
                   <span>Name</span>
                 </th>
                 <td><input type="text" name="item-name" placeholder="Name"
-                  onKeyDown={(event) => {if (event.key === 'Enter') event.preventDefault()}}
                   value={item.name}
                   onChange={event => {item.name = event.target.value}}
                 /></td>
@@ -129,7 +128,6 @@ function Items(props) {
                   <span>Enter</span>
                 </th>
                 <td><input type="date" name="item-enter" placeholder="YYYY-MM-DD" 
-                  onKeyDown={(event) => {if (event.key === 'Enter') event.preventDefault()}}
                   value={item.enter}
                   onChange={event => {item.enter = event.target.value}}
                 /></td>
@@ -139,7 +137,6 @@ function Items(props) {
                   <span>Expire</span>
                 </th>
                 <td><input type="date" name="item-expire" placeholder="YYYY-MM-DD" 
-                  onKeyDown={(event) => {if (event.key === 'Enter') event.preventDefault()}}
                   value={item.expire}
                   onChange={event => {item.expire = event.target.value}}
                 /></td>
@@ -147,8 +144,8 @@ function Items(props) {
             </tbody>
           </table>
           <div className="modal-footer">
-            <button className="button-close" onClick={() => modalToggle()}><span className="material-icons">close</span></button>
-            <button className="button-update" onClick={() => itemsUpdate()}><span className="material-icons">edit_note</span></button>
+            <button className="button-close" type="button" onClick={() => modalToggle()}><span className="material-icons">close</span></button>
+            <button className="button-update" type="button" onClick={() => itemsUpdate()}><span className="material-icons">edit_note</span></button>
           </div>
         </form>
       </div>
