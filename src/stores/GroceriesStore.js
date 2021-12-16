@@ -1,4 +1,5 @@
 import { configure, makeAutoObservable } from 'mobx';
+import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
@@ -34,7 +35,7 @@ export default class GroceriesStore {
     });
   }
 
-  groceriesRead() {
+  groceriesRead(orderByName, orderByType) {
     const promises = [];
     promises[0] = new Promise(function(resolve, reject) {
       axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
@@ -62,8 +63,9 @@ export default class GroceriesStore {
         grocery.hasItem = promiseItems[key];
         groceries.push(grocery);
       }
-      console.log(groceries)
-      this.groceries = groceries;
+      console.log(groceries);
+      console.log(orderByName, orderByType);
+      this.groceries = _.orderBy(groceries, orderByName, orderByType);
     }).catch(function(error) {
       axiosError(error);
     })
