@@ -63,8 +63,8 @@ function Groceries(props) {
             </tr>
           </thead>
           <tbody>
-          {groceries.map((grocery, index) => (
-            <tr key={index}>
+          {groceries.map(grocery => (
+            <tr key={grocery.key}>
               <td><input type="checkbox" 
                 checked={grocery.hasItem}
                 onChange={event => {
