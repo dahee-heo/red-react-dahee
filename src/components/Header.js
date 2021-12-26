@@ -33,11 +33,11 @@ function Header(props) {
           <ul className={'account-menu' + (a ? ' active' : '')}>
             {loginStore.user.uid ? 
             <>
-              <li>Hello {loginStore.user.displayName}!</li>
+              <li>Hello {loginStore.user.displayName || '게스트'}!</li>
               <li onClick={() => loginStore.googleLogout()}>Logout</li>
             </> :
             <>
-              <li>Guest</li>
+              <li onClick={() => loginStore.emailSignin()}>Guest</li>
               <li onClick={() => loginStore.googleLogin()}>Login</li>
             </>}
           </ul>

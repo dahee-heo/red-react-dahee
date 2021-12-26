@@ -39,6 +39,24 @@ export default class LoginStore {
   googleLogout() {
     firebase.auth().signOut();
   }
+
+  emailSignup() {
+    const email = 'guest@red-react-dahee.web.app';
+    const password = 'guestguest'
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      console.error(error);
+      alert(error.message);
+    });
+  };
+
+  emailSignin() {
+    const email = 'guest@red-react-dahee.web.app';
+    const password = 'guestguest';
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      console.error(error);
+      alert(error.message);
+    });
+  };
 }
 
 export const loginStore = new LoginStore();
