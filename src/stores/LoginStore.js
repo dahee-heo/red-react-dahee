@@ -27,6 +27,9 @@ export default class LoginStore {
           email: '',
           uid: ''
         };
+        if (window.location.pathname !== '/home') {
+          window.location.href = '/'
+        }
       }
     });
   }
