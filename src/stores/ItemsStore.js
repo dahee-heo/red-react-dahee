@@ -3,6 +3,7 @@ import _ from 'lodash';
 // import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
+import { loginStore } from './LoginStore.js';
 
 configure({
   enforceActions: 'never',
@@ -36,7 +37,7 @@ export default class ItemsStore {
   // }
 
   itemsRead(q, orderByName, orderByType) {
-    axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items.json').then((response) => {
+    axios.get(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items.json`).then((response) => {
       console.log('Done itemsRead', response);
       const items = [];
       for (const key in response.data) {
@@ -54,23 +55,23 @@ export default class ItemsStore {
     });
   }
 
-  itemsDelete(object) {
+  itemsDelete(object, cb) {
     console.log(object)
     const confirm = window.confirm(object.name + '을 지우시겠습니까?')
     if (!confirm) {
       return
     }
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+object.key+'.json'
+    const url = `https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items/${object.key}.json`
     axios.delete(url).then((response) => {
       console.log('Done itemsDelete', response);
-      this.itemsRead();
+      if (cb) cb();
     }).catch((error) => {
       axiosError(error);
     });
   }
 
   itemsUpdate(item, cb) {
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items/'+item.key+'.json'
+    const url = `https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items/${item.key}.json`
     const itemUpdate = {
       name: item.name,
       enter: item.enter,

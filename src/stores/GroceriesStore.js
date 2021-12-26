@@ -3,6 +3,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
+import { loginStore } from './LoginStore.js';
 
 configure({
   enforceActions: 'never',
@@ -27,7 +28,7 @@ export default class GroceriesStore {
       enter: moment().format('YYYY-MM-DD'),
       expire: moment().add(7, 'days').format('YYYY-MM-DD')
     };
-    axios.post('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json', grocery).then((response) => {
+    axios.post(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/groceries.json`, grocery).then((response) => {
       console.log('Done groceriesCreate', response);
       this.groceriesRead();
     }).catch((error) => {
@@ -38,7 +39,7 @@ export default class GroceriesStore {
   groceriesRead(orderByName, orderByType) {
     const promises = [];
     promises[0] = new Promise(function(resolve, reject) {
-      axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries.json').then((response) => {
+      axios.get(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/groceries.json`).then((response) => {
         console.log('Done groceriesRead', response);
         resolve(response.data);
       }).catch((error) => {
@@ -46,7 +47,7 @@ export default class GroceriesStore {
       });
     })
     promises[1] = new Promise(function(resolve, reject) {
-      axios.get('https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/items.json').then((response) => {
+      axios.get(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items.json`).then((response) => {
         resolve(response.data);
       }).catch(function(error) {
         reject(error);
@@ -55,7 +56,7 @@ export default class GroceriesStore {
     Promise.all(promises).then((result) => {
       console.log(result);
       const promiseGroceries = result[0];
-      const promiseItems = result[1];
+      const promiseItems = result[1] || [];
       const groceries = [];
       for (const key in promiseGroceries) {
         const grocery = promiseGroceries[key];
@@ -74,7 +75,7 @@ export default class GroceriesStore {
 
   groceriesDelete(key) {
     console.log(key)
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries/'+key+'.json'
+    const url = `https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/groceries/${key}.json`
     axios.delete(url).then((response) => {
       console.log('Done groceriesDelete', response);
       this.groceriesRead();
@@ -84,7 +85,7 @@ export default class GroceriesStore {
   }
 
   groceriesUpdate(grocery) {
-    const url = 'https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/groceries/'+grocery.key+'.json'
+    const url = `https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/groceries/${grocery.key}.json`
     const groceryUpdate = {
       expire: grocery.expire
     }

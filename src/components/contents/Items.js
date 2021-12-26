@@ -40,6 +40,14 @@ function Items(props) {
     };
     itemsStore.itemsUpdate(item, cb);
   };
+
+  const itemsDelete = function(_item) {
+    const cb = function() {
+      itemsStore.itemsRead(spSearch, orderByName, orderByType);
+    };
+    itemsStore.itemsDelete(_item, cb);
+  };
+  
   const activeClass = function(_orderByName, _orderByType) {
     if (orderByName === _orderByName && orderByType === _orderByType) {
       return ' active';
@@ -100,7 +108,7 @@ function Items(props) {
                 </td>
                 <td className="td-delete">
                   <button className="button-delete" 
-                    onClick={() => itemsStore.itemsDelete(item)}
+                    onClick={() => itemsDelete(item)}
                   ><span className="material-icons">delete</span></button>
                 </td>
               </tr>
