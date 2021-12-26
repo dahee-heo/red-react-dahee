@@ -2,6 +2,7 @@
 import { inject, observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { loginStore } from '../../stores/LoginStore';
 
 function Groceries(props) {
   const { groceriesStore } = props;
@@ -11,9 +12,12 @@ function Groceries(props) {
   const orderByName = searchParams.get('orderByName') || 'name';
   const orderByType = searchParams.get('orderByType') || 'asc';
   console.log(grocery, groceries);
+  const uid = loginStore.user.uid
   useEffect(() => {
-    groceriesStore.groceriesRead(orderByName, orderByType);
-  }, [groceriesStore, orderByName, orderByType]);
+    if (uid) {
+      groceriesStore.groceriesRead(orderByName, orderByType);
+    }
+  }, [groceriesStore, orderByName, orderByType, uid]);
   const activeClass = function(_orderByName, _orderByType) {
     if (orderByName === _orderByName && orderByType === _orderByType) {
       return ' active';
@@ -99,4 +103,4 @@ function Groceries(props) {
   )
 }
 
-export default inject('groceriesStore', 'itemsStore')(observer(Groceries));
+export default inject('groceriesStore', 'itemsStore', 'loginStore')(observer(Groceries));

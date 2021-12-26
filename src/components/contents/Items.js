@@ -9,7 +9,8 @@ function Items(props) {
   const orderByName = searchParams.get('orderByName') || 'name';
   const orderByType = searchParams.get('orderByType') || 'asc';
   console.log(spSearch);
-  const { itemsStore, history } = props;
+  const { itemsStore, loginStore, history } = props;
+  const uid = loginStore.user.uid
   const { items, item } = itemsStore;
   const [ q, setQ ] = useState('');
   const serch = (event) => {
@@ -18,9 +19,11 @@ function Items(props) {
     history.push(`?q=${q}`);
   }
   useEffect(() => {
-    itemsStore.itemsRead(spSearch, orderByName, orderByType);
+    if (uid) {
+      itemsStore.itemsRead(spSearch, orderByName, orderByType);
+    }
     setQ(spSearch);
-  }, [itemsStore, spSearch, orderByName, orderByType]);
+  }, [itemsStore, spSearch, orderByName, orderByType, uid]);
   const modalToggle = function(_item) {
     document.body.classList.toggle('o-hidden');
     document.getElementsByClassName('modal-background')[0].classList.toggle('active');
@@ -153,4 +156,4 @@ function Items(props) {
   )
 }
 
-export default inject('itemsStore')(observer(Items));
+export default inject('itemsStore', 'loginStore')(observer(Items));
