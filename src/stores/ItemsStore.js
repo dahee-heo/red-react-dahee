@@ -1,6 +1,6 @@
 import { configure, makeAutoObservable } from 'mobx';
 import _ from 'lodash';
-// import moment from 'moment';
+import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
 import { loginStore } from './LoginStore.js';
@@ -22,6 +22,7 @@ export default class ItemsStore {
     expire: '',
     key: ''
   };
+  count = 0;
 
   // itemsCreate(grocery) {
   //   const item = {
@@ -40,14 +41,15 @@ export default class ItemsStore {
     axios.get(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items.json`).then((response) => {
       console.log('Done itemsRead', response);
       const items = [];
+      let count = 0;
       for (const key in response.data) {
         const item = response.data[key];
-        if (item.name.indexOf(q) === -1) {
-          continue
-        }
+        if (moment().add(3, 'days').format('YYYY-MM-DD') >= item.expire) count++;
+        if (item.name.indexOf(q) === -1) continue;
         item.key = key;
         items.push(item);
       }
+      this.count = count;
       console.log(items)
       this.items = _.orderBy(items, orderByName, orderByType);
     }).catch((error) => {

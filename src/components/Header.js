@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Header(props) {
-  const { loginStore } = props;
+  const { loginStore, itemsStore } = props;
   const [ a, setA ] = useState(false);
   useEffect(() => {
     loginStore.onAuthStateChanged();
@@ -26,7 +26,7 @@ function Header(props) {
           <div className="menu-items">
             {/* <a href="./items.html" id="menu-a-items"><span className="material-icons">list</span></a> */}
             <NavLink to="items" activeClassName='active' id="menu-a-items"><span className="material-icons">list</span></NavLink>
-            <div><span id="menu-items-counter">1</span></div>
+            <div><span id="menu-items-counter">{itemsStore.count}</span></div>
           </div>
         </> : <></>
       }
@@ -51,4 +51,4 @@ function Header(props) {
   )
 }
 
-export default inject('loginStore')(observer(Header));
+export default inject('loginStore', 'itemsStore')(observer(Header));
