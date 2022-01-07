@@ -4,6 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { axiosError } from './common.js';
 import { loginStore } from './LoginStore.js';
+import { itemsStore } from './ItemsStore.js';
 
 configure({
   enforceActions: 'never',
@@ -48,6 +49,12 @@ export default class GroceriesStore {
     })
     promises[1] = new Promise(function(resolve, reject) {
       axios.get(`https://red-react-dahee-default-rtdb.asia-southeast1.firebasedatabase.app/${loginStore.user.uid}/items.json`).then((response) => {
+        let count = 0;
+        for (const key in response.data) {
+          const item = response.data[key];
+          if (moment().add(3, 'days').format('YYYY-MM-DD') >= item.expire) count++;
+        }
+        itemsStore.count = count;
         resolve(response.data);
       }).catch(function(error) {
         reject(error);

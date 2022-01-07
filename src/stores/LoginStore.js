@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import firebase from '@firebase/app-compat';
+import { itemsStore } from './ItemsStore.js';
 
 export default class LoginStore {
   constructor() {
@@ -21,6 +22,7 @@ export default class LoginStore {
           email: firebaseUser.email,
           uid: firebaseUser.uid
         };
+        itemsStore.itemsRead();
       } else {
         this.user = {
           displayName: '',
